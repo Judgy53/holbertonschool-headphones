@@ -3,8 +3,8 @@
 :root {
   --clr-white: #FFFFFF;
   --clr-black: #071629;
-  --clr-red: #FF6565;
-  --clr-darkred: #d44a58;
+  --clr-red: #D43E45; /* Design color #FF6565 didn't meet contrast AA Guidelines */
+  --clr-darkred: #CA2D34;
   
   --text-color: var(--clr-white);
 
