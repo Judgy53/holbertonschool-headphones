@@ -9,7 +9,7 @@
   --clr-grey: #07162954;
   --clr-lightgrey: #07162917;
 
-  --text-color: var(--clr-white);
+  --text-color: var(--clr-black);
 
   --form-border-color: var(--clr-grey);
   --form-focused-color: var(--clr-lightgrey);
@@ -98,12 +98,18 @@ fieldset {
   border: none;
 }
 
+[data-section-theme='dark'] {
+  --text-color: var(--clr-white);
+  background-color: var(--clr-black);
+}
+
 /*** LAYOUT ***/
 
 .container {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  color: var(--text-color);
 }
 
 /* Grid */
@@ -130,12 +136,11 @@ ul.row {
   justify-content: space-between;
   align-items: center;
   padding: 2rem 3rem 0;
-  color: var(--text-color);
 }
 
 /* Navbar */
 
-.navbar .nav {
+.nav {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -226,7 +231,6 @@ ul.row {
 /*** SECTIONS ***/
 
 .section-inner {
-  color: var(--text-color);
   padding: 6rem 0;
 }
 
@@ -284,12 +288,6 @@ ul.row {
   margin: 2.5rem 0 4rem;
 }
 
-/* Section What we do */
-
-.section-whatwedo {
-  --text-color: var(--clr-black);
-}
-
 /* Section Our Results */
 
 .section-ourresults {
@@ -329,10 +327,6 @@ ul.row {
 }
 
 /* Section Contact Us */
-
-.section-contactus {
-  --text-color: var(--clr-black);
-}
 
 .section-contactus .section-header {
   padding-bottom: 0;
@@ -418,8 +412,6 @@ textarea:not(:focus):not(:placeholder-shown):valid {
 /* Footer */
 
 .footer {
-  --text-color: var(--clr-white);
-  background-color: var(--clr-black);
   padding: 2rem 0;
 }
 
@@ -429,20 +421,19 @@ textarea:not(:focus):not(:placeholder-shown):valid {
   justify-content: space-between;
   align-items: center;
   padding: 2rem 3rem;
-  color: var(--text-color);
 }
 
-.footer .nav-item {
+.social-link {
   font-size: var(--font-size-largest);
 }
 
-.footer .nav .nav-item + .nav-item {
+.footer .nav-item + .nav-item {
   padding-left: 1rem;
 }
 
 .footer-copyright {
   font-size: var(--font-size-smaller);
-  color: rgba(255, 255, 255, 0.33);
+  opacity: 0.5;
   text-align: center;
   margin: 0 auto;
 }
@@ -520,23 +511,23 @@ textarea:not(:focus):not(:placeholder-shown):valid {
     display: block;
   }
 
-  .header-container .navbar {
+  .navbar {
     display: none;
     flex: 1;
   }
 
-  .header-container .navbar .nav {
+  .navbar .nav {
     flex-direction: column;
     overflow: hidden;
     max-height: 0;
     transition: max-height .2s ease-out;
   }
 
-  .header-container.nav .nav-item {
+  .navbar .nav-item {
     padding: 1rem 0;
   }
 
-  .header-container .nav .nav-item + .nav-item {
+  .navbar .nav-item + .nav-item {
     padding-left: 0;
   }
 
