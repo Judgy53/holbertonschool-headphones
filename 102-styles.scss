@@ -1,0 +1,630 @@
+/*** VARIABLES ***/
+
+$clr-white: #FFFFFF;
+$clr-black: #071629;
+$clr-red: #D43E45;
+$clr-darkred: #CA2D34;
+$clr-green: #08805b;
+$clr-grey: #07162954;
+$clr-lightgrey: #07162917;
+
+$form-border-color: $clr-grey;
+$form-focused-color: $clr-lightgrey;
+$form-valid-color: $clr-green;
+$form-error-color: $clr-red;
+
+$font-family-base: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$font-size-smaller: .750rem;
+$font-size-small: .875rem;
+$font-size-medium: 1rem;
+$font-size-large: 1.125rem;
+$font-size-largest: 2rem;
+$font-size-card-logo: 4.5rem;
+
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$mobile-max-width: 480px;
+$tablet-max-width: 768px;
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: #{$mobile-max-width + 1px}) and (max-width: $tablet-max-width) {
+    @content;
+  }
+}
+
+@mixin mobile-and-tablet {
+  @media screen and (max-width: $tablet-max-width) {
+    @content;
+  }
+}
+
+:root {
+  --text-color: $clr-black;
+}
+
+/*** BASE ***/
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family-base;
+  font-size: $font-size-medium;
+  font-weight: $font-weight-regular;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+}
+
+p {
+  max-width: 40rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    color: $clr-red;
+  }
+}
+
+.button {
+  text-transform: uppercase;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  color: $clr-white;
+  background-color: $clr-red;
+  border: none;
+  border-radius: 2rem;
+  padding: .875rem 2rem;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, .75);
+  cursor: pointer;
+
+  &:hover {
+    background-color: $clr-darkred;
+  }
+
+  &:hover, .button:focus, .button:active {
+    color: $clr-white;
+  }
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+[data-section-theme='dark'] {
+  --text-color: #{$clr-white};
+  background-color: $clr-black;
+}
+
+/*** LAYOUT ***/
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-color);
+}
+
+/* Grid */
+
+ul.row {
+  list-style: none;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly;
+
+  @include mobile-and-tablet {
+      gap: 3rem 0;
+      justify-content: center;
+      flex-wrap: wrap;
+  }
+}
+
+.col-1-4 {
+  width: calc((100% / 4) - 2rem);
+
+  @include tablet {
+    width: calc(100% / 2 - 1rem);
+  }
+
+  @include mobile {
+    width: calc((100% / 1) - 2rem);
+  }
+}
+
+/* Header */
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem 0;
+
+  @include mobile {
+    padding: 2rem 1rem 0;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+  }
+}
+
+/* Navbar */
+
+@include mobile {
+  .navbar {
+    display: none;
+    flex: 1;
+  }
+}
+
+.nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  display: flex;
+  transition: max-height .2s ease-out;
+
+  @include mobile {
+    .header-container & {
+      flex-direction: column;
+      max-height: 0;
+    }
+  }
+
+  .nav-item {
+    font-size: $font-size-smaller;
+    font-weight: $font-weight-bold;
+
+    @include mobile {
+      padding: 1rem 0;
+    }
+
+    + .nav-item {
+      padding-left: 2rem;
+
+      @include mobile {
+        padding-left: 0;
+      }
+
+      @include tablet {
+        padding-left: 1rem;
+      }
+    }
+  }
+}
+
+/* Navbar button */
+
+.mobile-nav-btn, .mobile-nav-icon {
+  display: none;
+}
+
+.mobile-nav-icon {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  padding: 1rem;
+  flex-basis: 27%;
+
+  @include mobile {
+    display: block;
+  }
+
+  .navicon {
+    background: $clr-white;
+    display: block;
+    width: 1rem;
+    height: .1rem;
+    position: relative;
+
+    &::before, &::after {
+      content: '';
+      display: block;
+      width: 125%;
+      height: 125%;
+      position: absolute;
+      background: $clr-white;
+      transition: all .2s ease-out;
+    }
+
+    &::before {
+      top: .5rem;
+    }
+
+    &::after {
+      top: -.5rem;
+    }
+  }
+}
+
+.mobile-nav-btn {
+  ~ .nav {
+    overflow: inherit;
+  }
+
+  &:checked {
+    ~ .navbar {
+      display: block;
+    }
+
+    .nav {
+      max-height: 100%;
+    }
+
+    + .mobile-nav-icon .navicon {
+      background: transparent;
+    
+      &::before, &::after {
+        top: 0;
+      }
+    
+      &::before {
+        transform: rotate(-45deg);
+      }
+    
+      &::after {
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+@include mobile {
+  .headphones-logo {
+    flex-basis: 73%;
+  }
+}
+
+/*** SECTIONS ***/
+
+.section-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 3rem 3rem 3rem;
+}
+
+.section-header {
+  padding-bottom: 4rem;
+}
+
+.section-title {
+  font-size: $font-size-largest;
+  font-weight: $font-weight-semibold;
+  margin: 0;
+  padding-bottom: 2.5rem;
+}
+
+.section-subtitle {
+  font-weight: $font-weight-regular;
+  line-height: 1.625;
+  margin: 0;
+}
+
+.section-body {
+  width: 100%;
+}
+
+/* Section Hero */
+
+.section-hero {
+  margin-top: -4.3rem;
+  padding-top: 3rem;
+  background-image: url(images/headphones_hero_1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 800px;
+
+  
+  @include mobile-and-tablet {
+    background-position: 33%;
+  }
+
+  .section-inner {
+    padding-top: 20rem;
+  }
+
+  .section-title {
+    padding: 0;
+  }
+
+  .button {
+    margin: 2.5rem 0 4rem;
+  }
+}
+
+/* Section What We Do */
+
+.section-whatwedo .section-body {
+  @include tablet {
+    padding: 0 5rem;
+  }
+
+  @include mobile {
+    padding: 0 2rem;
+  }
+}
+
+.section-whatwedo .card-title {
+  @include tablet {
+    margin-top: 0;
+  }
+}
+
+/* Section Our Results */
+
+.section-ourresults {
+  background-image: url(images/headphones_hero_2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .row {
+    justify-content: space-between;
+  }
+
+  [class^='col-'] {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.card-ourresults {
+  background: url(images/pentagone.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 1rem;
+  width: 190px;
+  height: 190px;
+
+  .card-title {
+    font-weight: $font-weight-bold;
+    font-size: 2.875rem;
+    margin-bottom: .5rem;
+  }
+
+  .card-body {
+    margin-top: 0;
+  }
+}
+
+/* Section Contact Us */
+
+.section-contactus .section-header {
+  padding-bottom: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+
+fieldset {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.form-group {
+  padding: .5rem;
+}
+
+label {
+  font-weight: $font-weight-semibold;
+  font-size: small;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+input[type='text'], input[type='email'], textarea {
+  width: 100%;
+  border: none;
+  border-top: .1rem solid $form-border-color;
+  outline: 0;
+
+  &:focus {
+    border: .1rem solid $form-border-color;
+    border-radius: .2rem;
+  }
+
+  &:not(:focus):not(:placeholder-shown):required {
+    &:invalid {
+      border: .15rem solid $form-error-color;
+      border-radius: .3rem;
+    }
+    
+    &:valid {
+      border-color: $form-valid-color;
+    }
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+.form-help {
+  font-size: $font-size-smaller;
+  margin: 0;
+  max-height: 0;
+  transition: .5s;
+  overflow: hidden;
+}
+
+.form-submit {
+  text-align: center;
+
+  .button {
+    box-shadow: none;
+  }
+}
+
+.form-group:focus-within {
+  &:not(.form-submit) {
+    background: $form-focused-color;
+  }
+
+  .form-help {
+    max-height: 5rem;
+  }
+}
+
+/* Footer */
+
+.footer {
+  padding: 2rem 0;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+
+  @include mobile {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2rem 0;
+  }
+}
+
+.social-link {
+  font-size: $font-size-largest;
+}
+
+.footer .nav-item + .nav-item {
+  padding-left: 1rem;
+}
+
+.footer-copyright {
+  font-size: $font-size-smaller;
+  opacity: 0.5;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*** CARDS ***/
+
+.card-logo {
+  font-size: $font-size-card-logo;
+  color: $clr-red;
+  display: inline-block;
+}
+
+.card-title {
+  font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
+}
+
+.card-body {
+  font-size: $font-size-small;
+}
+
+/* ANIMATIONS */
+
+.anim-slide {
+  animation: slide 1s ease-in-out infinite;
+}
+@keyframes slide {
+  0% {clip-path: circle(30% at -40% 50%)}
+  100% {clip-path: circle(30% at 140% 50%)}
+}
+
+.anim-flicker {
+  animation: flicker 2s linear infinite alternate;
+}
+@keyframes flicker {
+  0%, 50%, 60% {opacity: 1;}
+  55%, 65%, 75% {opacity: 0.75;}
+  70%, 80%, 90% {opacity: 0.5;}
+  85%, 95% {opacity: 0.25;}
+  100% {opacity: 0;}
+}
+
+.anim-bounce {
+  animation: bounce 2s linear infinite;
+}
+@keyframes bounce {
+  0%, 50%, 100% {transform: translate(0, 0);}
+  12.5%, 37.5% {transform: translate(-15%, 7.5%);}
+  62.5%, 87.5% {transform: translate(15%, 7.5%);}
+  25% {transform: translate(-25%, 25%);}
+  75% {transform: translate(25%, 25%);}
+}
+
+.anim-scale {
+  animation: scale 2s ease infinite;
+}
+@keyframes scale {
+  0%, 25%, 100% {scale: 1;}
+  50% {scale: 1.33}
+}
+
+.anim-rotate-hover {
+  transition: transform 1s linear;
+
+  &:hover {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-textglow-hover {
+  transition: all .5s ease;
+
+  &:hover {
+    text-shadow: $clr-darkred .25rem .25rem ;
+    filter: drop-shadow($clr-darkred .25rem .25rem .5rem);
+  }
+}
+
+.anim-invert-hover {
+  transition: all 1s linear;
+
+  &:hover {
+    filter: #{"invert()"}
+  }
+}
+
+.anim-skew-hover {
+  transition: all 1s linear;
+
+  &:hover {
+    transform: skew(15deg, 10deg);
+  }
+}
